@@ -61,6 +61,26 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
             else:
                 print(f"Page {page_num + 1}: Image NOT found")
 
+def save_pdf_file(uploaded_file, save_directory):
+    """Saves the uploaded PDF file to the specified directory with its original name."""
+    try:
+        # Ensure the directory exists
+        if not os.path.exists(save_directory):
+            os.makedirs(save_directory)
+        
+        # Extract the original file name
+        file_name = uploaded_file.name  # This is the original file name
+        file_path = os.path.join(save_directory, file_name)
+
+        # Write the uploaded file to the disk
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())  # Save the content to the file
+
+        st.success(f"PDF file has been successfully saved to: {file_path}")
+        return file_path  # Return the saved file path
+    except Exception as e:
+        st.error(f"Error saving PDF file: {e}")
+        return None
 
 def import_document():
     """Handles document import and directory selection for image extraction."""
@@ -75,7 +95,8 @@ def import_document():
             if uploaded_file.type != "application/pdf":
                 st.error("Invalid file type. Please upload a PDF document.")
             else:
-                pdf_file = uploaded_file
+                pdf_file = save_pdf_file(uploaded_file, saved_directory)
+                
                 st.success("File has been successfully uploaded!")
 
                 # Step 2: Directory selection (Input box)
