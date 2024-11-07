@@ -54,21 +54,23 @@ def import_document():
     """Handles document import and directory selection for image extraction."""
     global pdf_file, saved_directory
 
-    # This will show a waiting message until the file is uploaded
+    # Display an info message while waiting for file upload
     st.info("Please upload a PDF document to proceed.")
-            # Step 1: File upload (Streamlit file uploader)
+
+    # Step 1: File upload (Streamlit file uploader)
     uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
 
+    # Check if file is uploaded
     if uploaded_file is not None:
-        # Now that we know the file is uploaded, check its type
+        # Check the file type
         if uploaded_file.type == "application/pdf":
             st.success("File has been successfully uploaded!")
-            
+
             # Step 2: Directory selection (Input box)
             saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
             if saved_directory:
                 st.success(f"Images will be saved to: {saved_directory}")
-                
+
                 # Step 3: Extract Images Button (Trigger the extraction)
                 if st.button('Extract Images', key="extract_button"):
                     st.write("Extracting images...")
@@ -77,7 +79,8 @@ def import_document():
         else:
             st.error("Invalid file type. Please upload a PDF document.")
     else:
-        st.info("Please upload a PDF document to proceed.")
+        # This will show when no file is uploaded
+        st.info("Waiting for file upload...")
         
 
 
