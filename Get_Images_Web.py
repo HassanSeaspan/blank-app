@@ -49,7 +49,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             # Print the saved file path
                             image_path = image_filename.replace(os.sep, "/")
                             print(f"Saved image: {image_path}")
-                            st.success(f"Saved image: {image_path}")
+                            st.success(f"Saved image: {image_path} in {image_directory}")
                             
                             # # Save the image data to a file
                             # image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
