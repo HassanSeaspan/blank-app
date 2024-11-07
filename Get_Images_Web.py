@@ -54,7 +54,7 @@ def import_document():
     global pdf_file, saved_directory
 
     # Step 1: File upload (Streamlit file uploader)
-    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
+    uploaded_file = st.file_uploader("Choose a file")
 
     # If no file is uploaded yet, show a message prompting the user to upload a file
     if uploaded_file is None:
