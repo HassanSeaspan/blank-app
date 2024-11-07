@@ -90,33 +90,36 @@ def import_document():
 def main():
     global pdf_file, saved_directory
     
-    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
-    """Handles document import and directory selection for image extraction."""
+    while True:
+        # This will show a waiting message until the file is uploaded
+        st.info("Please upload a PDF document to proceed.")
+                # Step 1: File upload (Streamlit file uploader)
+        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
+        if uploaded_file:
+            break
 
-    # Display an info message while waiting for file upload
-    st.info("Please upload a PDF document to proceed.")
+    # Check if a file is uploaded
+    # Check if the uploaded file is a valid PDF
+    if uploaded_file.type == "application/pdf":
+        st.error("Invalid file type. Please upload a PDF document.")
 
-    # Check if file is uploaded
-    if uploaded_file is not None:
-        # Check the file type
-        if uploaded_file.type == "application/pdf":
-            st.success("File has been successfully uploaded!")
+        # Step 2: Directory selection (Input box)
+        saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
+        
+        if saved_directory:
+            st.success(f"Images will be saved to: {saved_directory}")
 
-            # Step 2: Directory selection (Input box)
-            saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-            if saved_directory:
-                st.success(f"Images will be saved to: {saved_directory}")
+            # Step 3: Extract Images Button (Trigger the extraction)
+            if st.button('Extract Images', key="extract_button"):
+                st.write("Extracting images...")
 
-                # Step 3: Extract Images Button (Trigger the extraction)
-                if st.button('Extract Images', key="extract_button"):
-                    st.write("Extracting images...")
-                    # Add your image extraction logic here
-                    extract_images_from_page(uploaded_file, 0, saved_directory)  # Trigger extraction
-        else:
-            st.error("Invalid file type. Please upload a PDF document.")
+                # You can add a spinner to show that extraction is in progress
+                with st.spinner('Extracting images...'):
+                    # Simulate extraction process (replace with your actual function)
+                    extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
     else:
-        # This will show when no file is uploaded
-        st.info("Waiting for file upload...")
+        pdf_file = uploaded_file
+        st.success("File has been successfully uploaded!")
 
 if __name__ == "__main__":
     main()
