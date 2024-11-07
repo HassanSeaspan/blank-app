@@ -3,6 +3,8 @@ import pdfplumber
 import PyPDF2
 from urllib.parse import quote
 import streamlit as st
+from io import StringIO
+import pandas as pd
 
 # Initialize variables to hold the selected directory and file
 saved_directory = ""
@@ -53,26 +55,43 @@ def import_document():
     """Handles document import and directory selection for image extraction."""
     global pdf_file, saved_directory
 
-    # Step 1: File upload (Streamlit file uploader)
     uploaded_file = st.file_uploader("Choose a file")
-    st.info("Please upload a PDF document to proceed.")
-    # If no file is uploaded yet, show a message prompting the user to upload a file
     if uploaded_file is not None:
-        # Now that we know the file is uploaded, check its type
-        st.success("File has been successfully uploaded!")
-        pdf_file = uploaded_file  # Save the uploaded file
+        # To read file as bytes:
+        bytes_data = uploaded_file.getvalue()
+        st.write(bytes_data)
 
-        # Step 2: Directory selection (Input box)
-        saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-        if saved_directory:
-            st.success(f"Images will be saved to: {saved_directory}")
+        # To convert to a string based IO:
+        stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+        st.write(stringio)
 
-            # Step 3: Extract Images Button (Trigger the extraction)
-            if st.button('Extract Images', key="extract_button"):
-                st.write("Extracting images...")
-                # You can add a spinner to show that extraction is in progress
-                with st.spinner('Extracting images...'):
-                    extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
+        # To read file as string:
+        string_data = stringio.read()
+        st.write(string_data)
+
+        # Can be used wherever a "file-like" object is accepted:
+        dataframe = pd.read_csv(uploaded_file)
+        st.write(dataframe)
+    # Step 1: File upload (Streamlit file uploader)
+    # uploaded_file = st.file_uploader("Choose a file")
+    # st.info("Please upload a PDF document to proceed.")
+    # # If no file is uploaded yet, show a message prompting the user to upload a file
+    # if uploaded_file is not None:
+    #     # Now that we know the file is uploaded, check its type
+    #     st.success("File has been successfully uploaded!")
+    #     pdf_file = uploaded_file  # Save the uploaded file
+
+    #     # Step 2: Directory selection (Input box)
+    #     saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
+    #     if saved_directory:
+    #         st.success(f"Images will be saved to: {saved_directory}")
+
+    #         # Step 3: Extract Images Button (Trigger the extraction)
+    #         if st.button('Extract Images', key="extract_button"):
+    #             st.write("Extracting images...")
+    #             # You can add a spinner to show that extraction is in progress
+    #             with st.spinner('Extracting images...'):
+    #                 extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
 
 
 
