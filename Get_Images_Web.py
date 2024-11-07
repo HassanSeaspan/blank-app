@@ -74,10 +74,14 @@ def import_document():
                 # Step 3: Extract Images Button (Trigger the extraction)
                 if st.button('Extract Images', key="extract_button"):
                     st.write("Extracting images...")
-                    extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
+
+                    # You can add a spinner to show that extraction is in progress
+                    with st.spinner('Extracting images...'):
+                        # Simulate extraction process (replace with your actual function)
+                        extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
     else:
-        # This will show a warning only if the file is not uploaded yet
-        st.warning("Please upload a PDF document.")
+        # This will show a waiting message until the file is uploaded
+        st.info("Please upload a PDF document to proceed.")
 
 
 
