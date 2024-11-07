@@ -58,51 +58,19 @@ def import_document():
     st.info("Please upload a PDF document to proceed.")
 
     # Step 1: File upload (Streamlit file uploader)
-    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
+    pdf_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
+    
+    return pdf_file
 
-    # Check if file is uploaded
-    if uploaded_file is not None:
-        # Check the file type
-        if uploaded_file.type == "application/pdf":
-            st.success("File has been successfully uploaded!")
-
-            # Step 2: Directory selection (Input box)
-            saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-            if saved_directory:
-                st.success(f"Images will be saved to: {saved_directory}")
-
-                # Step 3: Extract Images Button (Trigger the extraction)
-                if st.button('Extract Images', key="extract_button"):
-                    st.write("Extracting images...")
-                    # Add your image extraction logic here
-                    extract_images_from_page(uploaded_file, 0, saved_directory)  # Trigger extraction
-        else:
-            st.error("Invalid file type. Please upload a PDF document.")
-    else:
-        # This will show when no file is uploaded
-        st.info("Waiting for file upload...")
-    if uploaded_file.type == "application/pdf":
-            st.success("File has been successfully uploaded!")
-
-            # Step 2: Directory selection (Input box)
-            saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-            if saved_directory:
-                st.success(f"Images will be saved to: {saved_directory}")
-
-                # Step 3: Extract Images Button (Trigger the extraction)
-                if st.button('Extract Images', key="extract_button"):
-                    st.write("Extracting images...")
-                    # Add your image extraction logic here
-                    extract_images_from_page(uploaded_file, 0, saved_directory)  # Trigger extraction
-    else:
-        st.error("Invalid file type. Please upload a PDF document.")
 
 
 
 
 # Main function (Streamlit app entry point)
 def main():
-    import_document()
+    x = import_document()
+    st.success(f"{x} is successfully downloaded")
+    
 
 
 if __name__ == "__main__":
