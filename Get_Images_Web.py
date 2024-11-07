@@ -54,24 +54,27 @@ def import_document():
     global pdf_file, saved_directory
 
     # Step 1: File upload
-    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf")
+    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="file_uploader")
     if uploaded_file:
         pdf_file = uploaded_file
         st.success("File has been successfully uploaded!")
 
-        # Step 2: Directory selection
-        saved_directory = st.text_input("Enter directory to save images:")
+        # Step 2: Directory selection (Input box)
+        saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
         if saved_directory:
             st.success(f"Images will be saved to: {saved_directory}")
-            st.button('Extract Images', on_click=extract_images_from_page, args=(pdf_file, 0, saved_directory))  # Trigger extraction
+
+            # Step 3: Extract Images Button (Unique ID using key)
+            if st.button('Extract Images', key="extract_button"):
+                extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
 
 
 # Main function (Streamlit app entry point)
 def main():
     st.title("PDF Image Extraction")
 
-    # Trigger document import function
-    if st.button('Run Image Extraction'):
+    # Run Image Extraction button
+    if st.button('Run Image Extraction', key="run_button"):
         import_document()
 
 
