@@ -48,6 +48,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                     except Exception as e:
                         print(e)
 
+uploaded_file = None
 
 def import_document():
     """Handles document import and directory selection for image extraction."""
