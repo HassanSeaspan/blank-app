@@ -14,10 +14,13 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
     image_coordinates = {}  # Dictionary to store image coordinates
     i= 0
     # st.write(f"In function now and extracting from {pdf_path} and inserting in {image_directory}")
+    st.info("Ok 1")
     with pdfplumber.open(pdf_path) as pdf:
+            st.info("Ok 2")
             page = pdf.pages[page_num]
             images = page.images
             if images:
+                st.info("Ok 3")
                 for img in images:
                     print(len(images))
                     x0, y0, x1, y1 = img['x0'], img['top'], img['x1'], img['bottom']
@@ -60,7 +63,6 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             print(e)
 
             else:
-                st.error("Failed to extract images")
                 print(f"Page {page_num + 1}: Image NOT found")
 
 def save_uploaded_file(uploaded_file):
