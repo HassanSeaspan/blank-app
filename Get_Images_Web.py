@@ -15,7 +15,7 @@ except ImportError:
 saved_directory = ""
 pdf_file = ""
 
-# Centering function (only needed for tkinter locally)
+
 def center_window(window, width, height):
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
@@ -23,8 +23,9 @@ def center_window(window, width, height):
     y = (screen_height // 2) - (height // 2)
     window.geometry(f"{width}x{height}+{x}+{y}")
 
+
 def import_document():
-    """Handles document import using tkinter locally and streamlit on cloud."""
+    """Handles document import using tkinter locally and Streamlit on cloud."""
     global pdf_file
     if tkinter:
         # Use tkinter for file selection locally
@@ -48,6 +49,7 @@ def import_document():
             pdf_file = uploaded_file
             st.success("File has been successfully retrieved!")
             show_directory_prompt()  # Proceed to directory selection
+
 
 def show_directory_prompt():
     """Handles directory selection using tkinter locally and Streamlit in the cloud."""
@@ -74,6 +76,7 @@ def show_directory_prompt():
             st.success(f"Images will be saved to: {saved_directory}")
             extract_images_from_page(pdf_file, 0, saved_directory)  # Extract images
 
+
 def get_directory(dir_window):
     """Handles directory selection using tkinter locally."""
     global saved_directory
@@ -88,6 +91,7 @@ def get_directory(dir_window):
             messagebox.showerror("Invalid Directory", "The selected path is not a valid directory.")
     else:
         messagebox.showinfo("No Selection", "No directory selected.")
+
 
 def extract_images_from_page(pdf_path, page_num, image_directory):
     """Extracts images from the given PDF page and saves them in the specified directory."""
@@ -128,12 +132,18 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                     except Exception as e:
                         print(e)
 
+
 def count_pdf_pages(file_path):
     """Returns the number of pages in the provided PDF document."""
     with open(file_path, 'rb') as file:
         reader = PyPDF2.PdfReader(file)
         return len(reader.pages)
 
-# Main function (only needed for local setup with tkinter)
-if __name__ == "__main__":
+
+# Main function (needed for Streamlit app)
+def main():
     import_document()
+
+
+if __name__ == "__main__":
+    main()
