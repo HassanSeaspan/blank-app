@@ -55,30 +55,24 @@ def import_document():
 
     # Step 1: File upload (Streamlit file uploader)
     uploaded_file = st.file_uploader("Choose a file")
-
+    st.info("Please upload a PDF document to proceed.")
     # If no file is uploaded yet, show a message prompting the user to upload a file
-    if uploaded_file is None:
-        st.info("Please upload a PDF document to proceed.")
-    else:
+    if uploaded_file is not None:
         # Now that we know the file is uploaded, check its type
-        if uploaded_file.type == "application/pdf":
-            st.success("File has been successfully uploaded!")
-            pdf_file = uploaded_file  # Save the uploaded file
+        st.success("File has been successfully uploaded!")
+        pdf_file = uploaded_file  # Save the uploaded file
 
-            # Step 2: Directory selection (Input box)
-            saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-            if saved_directory:
-                st.success(f"Images will be saved to: {saved_directory}")
+        # Step 2: Directory selection (Input box)
+        saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
+        if saved_directory:
+            st.success(f"Images will be saved to: {saved_directory}")
 
-                # Step 3: Extract Images Button (Trigger the extraction)
-                if st.button('Extract Images', key="extract_button"):
-                    st.write("Extracting images...")
-                    # You can add a spinner to show that extraction is in progress
-                    with st.spinner('Extracting images...'):
-                        extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
-        else:
-            st.error("Invalid file type. Please upload a PDF document.")
-
+            # Step 3: Extract Images Button (Trigger the extraction)
+            if st.button('Extract Images', key="extract_button"):
+                st.write("Extracting images...")
+                # You can add a spinner to show that extraction is in progress
+                with st.spinner('Extracting images...'):
+                    extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
 
 
 
