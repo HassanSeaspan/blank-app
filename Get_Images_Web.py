@@ -62,19 +62,19 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
             else:
                 print(f"Page {page_num + 1}: Image NOT found")
 
-# def save_uploaded_file(uploaded_file):
-#     """Save the uploaded file temporarily and return the file path."""
-#     # Create a temporary directory to save the uploaded file
-#     temp_dir = tempfile.mkdtemp()
+def save_uploaded_file(uploaded_file):
+    """Save the uploaded file temporarily and return the file path."""
+    # Create a temporary directory to save the uploaded file
+    temp_dir = tempfile.mkdtemp()
 
-#     # Define the file path where the uploaded file will be saved
-#     temp_file_path = os.path.join(temp_dir, uploaded_file.name)
+    # Define the file path where the uploaded file will be saved
+    temp_file_path = os.path.join(temp_dir, uploaded_file.name)
 
-#     # Save the file to the temporary directory
-#     with open(temp_file_path, "wb") as f:
-#         f.write(uploaded_file.getbuffer())
+    # Save the file to the temporary directory
+    with open(temp_file_path, "wb") as f:
+        f.write(uploaded_file.getbuffer())
 
-#     return temp_file_path
+    return temp_file_path
 
 def import_document():
     """Handles document import and directory selection for image extraction."""
@@ -89,8 +89,20 @@ def import_document():
             if uploaded_file.type != "application/pdf":
                 st.error("Invalid file type. Please upload a PDF document.")
             else:
-                # pdf_file = save_uploaded_file(uploaded_file)
-                pdf_file = uploaded_file
+                pdf_file = save_uploaded_file(uploaded_file)
+                
+                # Step 3: Provide a download button for the user to download the temp file
+                with open(pdf_file, "rb") as f:
+                    file_data = f.read()
+                
+                st.download_button(
+                    label="Download temporary file",
+                    data=file_data,
+                    file_name=uploaded_file.name,
+                    mime="application/pdf"
+                )
+                
+                # pdf_file = uploaded_file
                 st.success("File has been successfully uploaded!")
 
                 # Step 2: Directory selection (Input box)
@@ -100,7 +112,7 @@ def import_document():
 
                     # Step 3: Extract Images Button (Trigger the extraction)
                     if st.button('Extract Images', key="extract_button"):
-                        st.write(f"Extracting images fromhji {pdf_file}")
+                        st.write(f"Extracting images from {pdf_file}")
                         extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
         else:
             st.warning("Please upload a PDF document.")
