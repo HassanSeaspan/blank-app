@@ -55,8 +55,6 @@ def import_document():
 
     # Step 1: File upload (Streamlit file uploader)
     try:
-        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
-        
         # Step 1: File upload (Streamlit file uploader)
         uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
 
