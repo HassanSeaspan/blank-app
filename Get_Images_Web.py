@@ -54,8 +54,8 @@ def import_document():
     global pdf_file, saved_directory
 
     # Step 1: File upload (Streamlit file uploader)
-    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
-    if uploaded_file:
+    try:
+        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
         pdf_file = uploaded_file
         st.success("File has been successfully uploaded!")
 
@@ -68,14 +68,14 @@ def import_document():
             if st.button('Extract Images', key="extract_button"):
                 st.write("Extracting images...")
                 extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
+    except FileNotFoundError:
+        st.error("File Not Found", "Error: The file was not found.")
+    except Exception as e:
+        st.errorr("Error", f"An error occurred: {e}") 
 
 
 # Main function (Streamlit app entry point)
 def main():
-    # st.title("PDF Image Extraction")
-
-    # Run Image Extraction button
-    # if st.button('Run Image Extraction', key="run_button"):
     import_document()
 
 
