@@ -53,11 +53,13 @@ def import_document():
     """Handles document import and directory selection for image extraction."""
     global pdf_file, saved_directory
 
-    # Step 1: File upload (Streamlit file uploader)
-    uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
+    while uploaded_file is None:
+        # This will show a waiting message until the file is uploaded
+        st.info("Please upload a PDF document to proceed.")
+                # Step 1: File upload (Streamlit file uploader)
+        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
 
     # Check if a file is uploaded
-    if uploaded_file is not None:
         # Check if the uploaded file is a valid PDF
         if uploaded_file.type != "application/pdf":
             st.error("Invalid file type. Please upload a PDF document.")
@@ -79,9 +81,7 @@ def import_document():
                     with st.spinner('Extracting images...'):
                         # Simulate extraction process (replace with your actual function)
                         extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
-    else:
-        # This will show a waiting message until the file is uploaded
-        st.info("Please upload a PDF document to proceed.")
+        
 
 
 
