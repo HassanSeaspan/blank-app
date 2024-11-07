@@ -1,9 +1,9 @@
 import streamlit as st
-# import Get_Images_Script.py
-import Get_Images_Web
+import Get_Images_Web  # This imports your script
 
-st.title("🎈 Streamlit App with External Script")
+# Your Streamlit app code
+st.title("🎈 Streamlit Web App with External Script")
 
-# st.write(
-#     "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-# )
+# Example: If Get_Images_Web.py has a function `main` that runs the script
+if st.button('Run Image Extraction'):
+    Get_Images_Web.main()  # Calls the main function from Get_Images_Web.py
