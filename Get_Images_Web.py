@@ -72,7 +72,7 @@ def import_document():
 
 # Main function (Streamlit app entry point)
 def main():
-    st.title("PDF Image Extraction")
+    # st.title("PDF Image Extraction")
 
     # Run Image Extraction button
     if st.button('Run Image Extraction', key="run_button"):
