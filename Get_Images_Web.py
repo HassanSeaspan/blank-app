@@ -57,33 +57,31 @@ def import_document():
     try:
         # Step 1: File upload (Streamlit file uploader)
         uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
-
-        # Check if a file is uploaded
-        if uploaded_file is not None:
-            # Check if the uploaded file is a valid PDF
-            if uploaded_file.type != "application/pdf":
-                st.error("Invalid file type. Please upload a PDF document.")
-            else:
-                pdf_file = uploaded_file
-                st.success("File has been successfully uploaded!")
-
-                # Step 2: Directory selection (Input box)
-                saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-                if saved_directory:
-                    st.success(f"Images will be saved to: {saved_directory}")
-
-                    # Step 3: Extract Images Button (Trigger the extraction)
-                    if st.button('Extract Images', key="extract_button"):
-                        st.write("Extracting images...")
-                        extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
-        else:
-            st.warning("Please upload a PDF document.")  # Show warning if no file is uploaded yet
-
-
     except FileNotFoundError:
         st.error("Error: The file was not found.")
     except Exception as e:
         st.error(f"An error occurred: {e}")
+        
+    # Check if a file is uploaded
+    if uploaded_file is not None:
+        # Check if the uploaded file is a valid PDF
+        if uploaded_file.type != "application/pdf":
+            st.error("Invalid file type. Please upload a PDF document.")
+        else:
+            pdf_file = uploaded_file
+            st.success("File has been successfully uploaded!")
+
+            # Step 2: Directory selection (Input box)
+            saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
+            if saved_directory:
+                st.success(f"Images will be saved to: {saved_directory}")
+
+                # Step 3: Extract Images Button (Trigger the extraction)
+                if st.button('Extract Images', key="extract_button"):
+                    st.write("Extracting images...")
+                    extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
+    else:
+        st.warning("Please upload a PDF document.")  # Show warning if no file is uploaded yet
 
 
 
