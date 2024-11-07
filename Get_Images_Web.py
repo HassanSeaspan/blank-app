@@ -95,7 +95,6 @@ def import_document():
             if uploaded_file.type != "application/pdf":
                 st.error("Invalid file type. Please upload a PDF document.")
             else:
-                pdf_file = save_pdf_file(uploaded_file, saved_directory)
                 
                 st.success("File has been successfully uploaded!")
 
@@ -103,10 +102,11 @@ def import_document():
                 saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
                 if saved_directory:
                     st.success(f"Images will be saved to: {saved_directory}")
-
+                    pdf_file = save_pdf_file(uploaded_file, saved_directory)
+                                    
                     # Step 3: Extract Images Button (Trigger the extraction)
                     if st.button('Extract Images', key="extract_button"):
-                        st.write(f"Extracting images from {pdf_file}")
+                        st.write(f"Extracting images.....")
                         extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
         else:
             st.warning("Please upload a PDF document.")
