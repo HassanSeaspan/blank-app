@@ -60,6 +60,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             print(e)
 
             else:
+                st.error("Failed to extract images")
                 print(f"Page {page_num + 1}: Image NOT found")
 
 def save_uploaded_file(uploaded_file):
