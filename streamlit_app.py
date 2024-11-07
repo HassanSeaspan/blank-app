@@ -1,5 +1,6 @@
 import streamlit as st
-import Get_Images_Script.py
+# import Get_Images_Script.py
+import Get_Images_Web.py
 
 st.title("🎈 Streamlit App with External Script")
 
