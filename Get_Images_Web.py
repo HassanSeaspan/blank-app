@@ -88,38 +88,7 @@ def import_document():
 
 # Main function (Streamlit app entry point)
 def main():
-    global pdf_file, saved_directory
-    
-    while True:
-        # This will show a waiting message until the file is uploaded
-        st.info("Please upload a PDF document to proceed.")
-                # Step 1: File upload (Streamlit file uploader)
-        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
-        if uploaded_file:
-            break
-
-    # Check if a file is uploaded
-    # Check if the uploaded file is a valid PDF
-    if uploaded_file.type == "application/pdf":
-        st.error("Invalid file type. Please upload a PDF document.")
-
-        # Step 2: Directory selection (Input box)
-        saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
-        
-        if saved_directory:
-            st.success(f"Images will be saved to: {saved_directory}")
-
-            # Step 3: Extract Images Button (Trigger the extraction)
-            if st.button('Extract Images', key="extract_button"):
-                st.write("Extracting images...")
-
-                # You can add a spinner to show that extraction is in progress
-                with st.spinner('Extracting images...'):
-                    # Simulate extraction process (replace with your actual function)
-                    extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
-    else:
-        pdf_file = uploaded_file
-        st.success("File has been successfully uploaded!")
+    import_document()
 
 if __name__ == "__main__":
     main()
