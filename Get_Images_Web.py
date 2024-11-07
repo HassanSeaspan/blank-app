@@ -75,8 +75,8 @@ def main():
     # st.title("PDF Image Extraction")
 
     # Run Image Extraction button
-    if st.button('Run Image Extraction', key="run_button"):
-        import_document()
+    # if st.button('Run Image Extraction', key="run_button"):
+    import_document()
 
 
 if __name__ == "__main__":
