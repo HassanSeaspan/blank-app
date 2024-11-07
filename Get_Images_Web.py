@@ -53,7 +53,7 @@ def import_document():
     """Handles document import and directory selection for image extraction."""
     global pdf_file, saved_directory
 
-    while uploaded_file is None:
+    while True:
         # This will show a waiting message until the file is uploaded
         st.info("Please upload a PDF document to proceed.")
                 # Step 1: File upload (Streamlit file uploader)
