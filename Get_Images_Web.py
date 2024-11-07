@@ -99,7 +99,7 @@ def import_document():
 
                     # Step 3: Extract Images Button (Trigger the extraction)
                     if st.button('Extract Images', key="extract_button"):
-                        st.write(f"Extracting images from {pdf_file}")
+                        st.write(f"Extracting images fromhji {pdf_file}")
                         extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
         else:
             st.warning("Please upload a PDF document.")
