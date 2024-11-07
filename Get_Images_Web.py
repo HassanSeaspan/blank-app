@@ -12,7 +12,7 @@ pdf_file = ""
 def extract_images_from_page(pdf_path, page_num, image_directory):
     image_coordinates = {}  # Dictionary to store image coordinates
     i= 0
-    st.write(f"In function now and extracting from {pdf_path} and inserting in {image_directory}")
+    # st.write(f"In function now and extracting from {pdf_path} and inserting in {image_directory}")
     with pdfplumber.open(pdf_path) as pdf:
             page = pdf.pages[page_num]
             images = page.images
