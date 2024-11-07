@@ -81,7 +81,21 @@ def import_document():
     else:
         # This will show when no file is uploaded
         st.info("Waiting for file upload...")
-        
+    if uploaded_file.type == "application/pdf":
+            st.success("File has been successfully uploaded!")
+
+            # Step 2: Directory selection (Input box)
+            saved_directory = st.text_input("Enter directory to save images:", key="directory_input")
+            if saved_directory:
+                st.success(f"Images will be saved to: {saved_directory}")
+
+                # Step 3: Extract Images Button (Trigger the extraction)
+                if st.button('Extract Images', key="extract_button"):
+                    st.write("Extracting images...")
+                    # Add your image extraction logic here
+                    extract_images_from_page(uploaded_file, 0, saved_directory)  # Trigger extraction
+    else:
+        st.error("Invalid file type. Please upload a PDF document.")
 
 
 
