@@ -1,17 +1,21 @@
 import os
 import pdfplumber
-import PyPDF2  # Ensure PyPDF2 is imported
+import PyPDF2
 from urllib.parse import quote
 import streamlit as st
-import tkinter as tk
-from tkinter import filedialog, messagebox
-from PIL import Image  # Import Pillow for image handling
 
-# Initialize a variable to hold the selected directory and file
+# Try importing tkinter only if running locally (not in Streamlit Cloud)
+try:
+    import tkinter as tk
+    from tkinter import filedialog, messagebox
+except ImportError:
+    tkinter = None  # Set tkinter to None if we are in Streamlit Cloud
+
+# Initialize variables to hold the selected directory and file
 saved_directory = ""
 pdf_file = ""
 
-# Centering function (only needed for tkinter GUI, not used in Streamlit)
+# Centering function (only needed for tkinter locally)
 def center_window(window, width, height):
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
@@ -22,15 +26,7 @@ def center_window(window, width, height):
 def import_document():
     """Handles document import using tkinter locally and streamlit on cloud."""
     global pdf_file
-    # Check if we're in a Streamlit environment or running locally
-    if 'streamlit' in globals():
-        # Use Streamlit's file uploader for cloud
-        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf")
-        if uploaded_file:
-            pdf_file = uploaded_file
-            st.success("File has been successfully retrieved!")
-            show_directory_prompt()  # Proceed to directory selection
-    else:
+    if tkinter:
         # Use tkinter for file selection locally
         root = tk.Tk()
         root.withdraw()
@@ -45,17 +41,18 @@ def import_document():
             show_directory_prompt()  # Proceed to directory selection
         else:
             messagebox.showinfo("No Selection", "No document selected.")
+    else:
+        # Use Streamlit's file uploader for cloud
+        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf")
+        if uploaded_file:
+            pdf_file = uploaded_file
+            st.success("File has been successfully retrieved!")
+            show_directory_prompt()  # Proceed to directory selection
 
 def show_directory_prompt():
     """Handles directory selection using tkinter locally and Streamlit in the cloud."""
-    # Check if we're in a Streamlit environment or running locally
-    if 'streamlit' in globals():
-        # Use Streamlit's directory uploader for cloud
-        saved_directory = st.text_input("Enter directory to save images:")
-        if saved_directory:
-            st.success(f"Images will be saved to: {saved_directory}")
-            extract_images_from_page(pdf_file, 0, saved_directory)  # Extract images
-    else:
+    global saved_directory
+    if tkinter:
         # Use tkinter for directory selection locally
         dir_window = tk.Tk()
         dir_window.title("Select Directory")
@@ -70,6 +67,12 @@ def show_directory_prompt():
         select_button.pack(pady=(5, 10))
 
         dir_window.mainloop()
+    else:
+        # Use Streamlit's text input for directory in the cloud
+        saved_directory = st.text_input("Enter directory to save images:")
+        if saved_directory:
+            st.success(f"Images will be saved to: {saved_directory}")
+            extract_images_from_page(pdf_file, 0, saved_directory)  # Extract images
 
 def get_directory(dir_window):
     """Handles directory selection using tkinter locally."""
