@@ -35,6 +35,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                 if area > 5:  # Ensure there is a valid area to extract
                     st.info("Hello there")
                     try:
+                        st.info("Hello there")
                         image_data = page.within_bbox((x0, y0, x1, y1)).to_image(resolution=300).original
                         if image_data:
                             # Ensure the directory exists
