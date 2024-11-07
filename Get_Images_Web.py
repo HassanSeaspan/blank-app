@@ -57,7 +57,11 @@ def import_document():
     try:
         uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
         
-        if uploaded_file:
+        # Step 1: File upload (Streamlit file uploader)
+        uploaded_file = st.file_uploader("Choose a PDF document", type="pdf", key="pdf_uploader")
+
+        # Check if a file is uploaded
+        if uploaded_file is not None:
             # Check if the uploaded file is a valid PDF
             if uploaded_file.type != "application/pdf":
                 st.error("Invalid file type. Please upload a PDF document.")
@@ -75,7 +79,8 @@ def import_document():
                         st.write("Extracting images...")
                         extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
         else:
-            st.warning("Please upload a PDF document.")
+            st.warning("Please upload a PDF document.")  # Show warning if no file is uploaded yet
+
 
     except FileNotFoundError:
         st.error("Error: The file was not found.")
