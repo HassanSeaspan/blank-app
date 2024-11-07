@@ -50,6 +50,16 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             print(f"Saved image: {image_path}")
                             st.success(f"Saved image: {image_path}")
                             
+                             # Add download button for the image
+                            with open(image_filename, "rb") as img_file:
+                                img_bytes = img_file.read()
+                                st.download_button(
+                                    label="Download Image",
+                                    data=img_bytes,
+                                    file_name=f"{page_num}_{i}.png",
+                                    mime="image/png"
+                                )
+                            
                             # Store the image coordinates and path
                             image_coordinates[i] = {
                                 'path': image_path,  # Keep the path in the desired format
