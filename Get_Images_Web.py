@@ -10,43 +10,55 @@ pdf_file = ""
 
 
 def extract_images_from_page(pdf_path, page_num, image_directory):
-    """Extracts images from the given PDF page and saves them in the specified directory."""
     image_coordinates = {}  # Dictionary to store image coordinates
-    i = 0
+    i= 0
     with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[page_num]
-        images = page.images
-        if images:
-            for img in images:
-                x0, y0, x1, y1 = img['x0'], img['top'], img['x1'], img['bottom']
-                if x0 < 0:
-                    x0 = 0
-                if y0 < 0:
-                    y0 = 0
-                if x1 < 0:
-                    x1 = 0
-                if y1 < 0:
-                    y1 = 0
+            page = pdf.pages[page_num]
+            images = page.images
+            if images:
+                for img in images:
+                    print(len(images))
+                    x0, y0, x1, y1 = img['x0'], img['top'], img['x1'], img['bottom']
+                    print(f"Page {page_num + 1}: Image found at ({x0}, {y0}, {x1}, {y1})")
+                    # image_key = f'image_{index + 1}'
+                    
+                    if x0 < 0:
+                        x0 = 0
+                    if y0 < 0:
+                        y0 = 0
+                    if x1 < 0:
+                        x1 = 0
+                    if y1 < 0:
+                        y1 = 0
+                    
+                    height = abs(y1 - y0)
+                    width = abs(x1 - x0)
+                    area = height * width
+                    # if x0 < 0 or x1 < 0 or y0 < 0 or y1 < 0:
+                        # Extract the image data directly from the img dictionary
+                    if area > 5:
+                        try:
+                            image_data = page.within_bbox((x0, y0, x1, y1)).to_image(resolution=300).original
+                            
+                            # Save the image data to a file
+                            image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")  # Unique filename
+                            image_data.save(image_filename)  # Save using PIL's save method
 
-                height = abs(y1 - y0)
-                width = abs(x1 - x0)
-                area = height * width
-                if area > 5:
-                    try:
-                        image_data = page.within_bbox((x0, y0, x1, y1)).to_image(resolution=300).original
-                        image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
-                        image_data.save(image_filename)
+                            # Encode the path to handle spaces and special characters
+                            image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
+                            
+                            print(f"Saved image: {image_filename}")
+                            image_coordinates[i] = {
+                                'path': image_path,  # Convert path to a file URL            # Store the path of the saved image
+                                'coordinates': (x0, y0, x1, y1),   # Store coordinates
+                                'page': page_num + 1    # Store page number (1-based index)
+                            }
+                            i += 1
+                        except Exception as e:
+                            print(e)
 
-                        # Encode the path to handle spaces and special characters
-                        image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
-                        image_coordinates[i] = {
-                            'path': image_path,
-                            'coordinates': (x0, y0, x1, y1),
-                            'page': page_num + 1
-                        }
-                        i += 1
-                    except Exception as e:
-                        print(e)
+            else:
+                print(f"Page {page_num + 1}: Image NOT found")
 
 
 def import_document():
