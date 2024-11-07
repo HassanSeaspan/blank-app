@@ -33,45 +33,32 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                 area = height * width
 
                 if area > 5:  # Ensure there is a valid area to extract
-                    st.info("Hello there")
                     try:
-                        st.info("Hello there")
                         image_data = page.within_bbox((x0, y0, x1, y1)).to_image(resolution=300).original
                         if image_data:
                             # Ensure the directory exists
-                            # if not os.path.exists(image_directory):
-                            #     os.makedirs(image_directory)
+                            if not os.path.exists(image_directory):
+                                os.makedirs(image_directory)
 
-                             # Prepare file path
+                            # Save the image data to a file
                             image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
-                            
-                            # Save the image
-                            image_data.save(image_filename)
+                            image_data.save(image_filename)  # Save using PIL's save method
 
-                            # Print the saved file path
+                            # Convert backslashes to forward slashes for the path
                             image_path = image_filename.replace(os.sep, "/")
+
                             print(f"Saved image: {image_path}")
-                            st.success(f"Saved image: {image_path} in {image_directory}")
+                            st.success(f"Saved image: {image_path}")
                             
-                            # # Save the image data to a file
-                            # image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
-                            # image_data.save(image_filename)  # Save using PIL's save method
-
-                            # # Convert backslashes to forward slashes for the path
-                            # image_path = image_filename.replace(os.sep, "/")
-
-                            # print(f"Saved image: {image_path}")
-                            # st.success(f"Saved image: {image_path}")
-                            
-                            #  # Add download button for the image
-                            # with open(image_filename, "rb") as img_file:
-                            #     img_bytes = img_file.read()
-                            #     st.download_button(
-                            #         label="Download Image",
-                            #         data=img_bytes,
-                            #         file_name=f"{page_num}_{i}.png",
-                            #         mime="image/png"
-                            #     )
+                             # Add download button for the image
+                            with open(image_filename, "rb") as img_file:
+                                img_bytes = img_file.read()
+                                st.download_button(
+                                    label="Download Image",
+                                    data=img_bytes,
+                                    file_name=f"{page_num}_{i}.png",
+                                    mime="image/png"
+                                )
                             
                             # Store the image coordinates and path
                             image_coordinates[i] = {
