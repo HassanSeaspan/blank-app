@@ -9,7 +9,6 @@ import tempfile
 saved_directory = ""
 pdf_file = ""
 
-
 def extract_images_from_page(pdf_path, page_num, image_directory):
     image_coordinates = {}  # Dictionary to store image coordinates
     i = 0
@@ -45,15 +44,15 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
                             image_data.save(image_filename)  # Save using PIL's save method
 
-                            # URL encode the file path to handle spaces and special characters
-                            image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
-                            
-                            print(f"Saved image: {image_filename}")
-                            st.success(f"Saved image: {image_filename}")
+                            # Convert backslashes to forward slashes for the path
+                            image_path = image_filename.replace(os.sep, "/")
+
+                            print(f"Saved image: {image_path}")
+                            st.success(f"Saved image: {image_path}")
                             
                             # Store the image coordinates and path
                             image_coordinates[i] = {
-                                'path': image_path,  # Convert path to a file URL
+                                'path': image_path,  # Keep the path in the desired format
                                 'coordinates': (x0, y0, x1, y1),  # Store coordinates
                                 'page': page_num + 1  # 1-based page index
                             }
@@ -64,6 +63,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                         print(f"Error saving image: {e}")
         else:
             print(f"Page {page_num + 1}: Image NOT found")
+
 
 def save_uploaded_file(uploaded_file):
     """Save the uploaded file temporarily and return the file path."""
