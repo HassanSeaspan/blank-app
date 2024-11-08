@@ -4,6 +4,7 @@ import PyPDF2
 from urllib.parse import quote
 import streamlit as st
 import tempfile
+from PIL import Image  # Import Pillow for image handling
 
 # Initialize variables to hold the selected directory and file
 saved_directory = ""
