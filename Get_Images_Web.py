@@ -49,7 +49,6 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
                             
                             print(f"Saved image: {image_filename}")
-                            st.success(f"Saved image: {image_filename}")
                             image_coordinates[i] = {
                                 'path': image_path,  # Convert path to a file URL            # Store the path of the saved image
                                 'coordinates': (x0, y0, x1, y1),   # Store coordinates
@@ -58,6 +57,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             i += 1
                         except Exception as e:
                             print(e)
+
             else:
                 print(f"Page {page_num + 1}: Image NOT found")
 
