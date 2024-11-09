@@ -37,17 +37,19 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                     area = height * width
                     # if x0 < 0 or x1 < 0 or y0 < 0 or y1 < 0:
                         # Extract the image data directly from the img dictionary
+                    st.info("About to check for area")
                     if area > 5:
+                        st.info("About to go into the try")
                         try:
                             image_data = page.within_bbox((x0, y0, x1, y1)).to_image(resolution=300).original
                             
                             # Save the image data to a file
                             image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")  # Unique filename
                             image_data.save(image_filename)  # Save using PIL's save method
-                            
+                            st.info("Image_data written")
                             with open(os.path.join(image_directory,image_filename),"wb") as f:
-                                f.write(pdf_file.getbuffer())
                                 st.write(f"Saved the following file: {image_filename}")
+                                f.write(image_data.getbuffer())
                             
                             # Encode the path to handle spaces and special characters
                             image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
