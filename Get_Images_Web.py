@@ -5,6 +5,7 @@ from urllib.parse import quote
 import streamlit as st
 import tempfile
 from PIL import Image  # Import Pillow for image handling
+from io import BytesIO
 
 # Initialize variables to hold the selected directory and file
 saved_directory = ""
@@ -50,6 +51,21 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                              # Display the saved image
                             image = Image.open(image_filename)
                             st.image(image, height=250, width=250)
+                            
+                            # Create a download button for the image
+                            # First, load the saved image into a BytesIO object
+                            with BytesIO() as buffer:
+                                image.save(buffer, format="PNG")
+                                buffer.seek(0)
+                                
+                                # Streamlit's download button
+                                st.download_button(
+                                    label="Download Image",
+                                    data=buffer,
+                                    file_name=f"{page_num}_{i}.png",
+                                    mime="image/png"
+                                )
+                            
                             # with open(os.path.join(image_directory,image_filename),"wb") as f:
                             #     st.write(f"Saved the following file: {image_filename}")
                             #     f.write(image_data.getbuffer())
