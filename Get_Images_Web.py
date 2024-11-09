@@ -47,9 +47,12 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")  # Unique filename
                             image_data.save(image_filename)  # Save using PIL's save method
                             st.info("Image_data written")
-                            with open(os.path.join(image_directory,image_filename),"wb") as f:
-                                st.write(f"Saved the following file: {image_filename}")
-                                f.write(image_data.getbuffer())
+                             # Display the saved image
+                            image = Image.open(image_filename)
+                            st.image(image, height=250, width=250)
+                            # with open(os.path.join(image_directory,image_filename),"wb") as f:
+                            #     st.write(f"Saved the following file: {image_filename}")
+                            #     f.write(image_data.getbuffer())
                             
                             # Encode the path to handle spaces and special characters
                             image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
