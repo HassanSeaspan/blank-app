@@ -44,34 +44,32 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                         try:
                             image_data = page.within_bbox((x0, y0, x1, y1)).to_image(resolution=300).original
                             
+                            # Ensure the directory exists
+                            if not os.path.exists(image_directory):
+                                os.makedirs(image_directory)
+
                             # Save the image data to a file
-                            image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")  # Unique filename
+                            image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
                             image_data.save(image_filename)  # Save using PIL's save method
-                            st.info("Image_data written")
-                             # Display the saved image
-                            image = Image.open(image_filename)
-                            st.image(image, height=250, width=250)
+
+                            # Convert backslashes to forward slashes for the path
+                            image_path = image_filename.replace(os.sep, "/")
+
+                            print(f"Saved image: {image_path}")
+                            st.success(f"Saved image: {image_path}")
                             
-                            # Create a download button for the image
-                            # First, load the saved image into a BytesIO object
-                            with BytesIO() as buffer:
-                                image.save(buffer, format="PNG")
-                                buffer.seek(0)
-                                
-                                # Streamlit's download button
+                            # Add download button for the image
+                            with open(image_filename, "rb") as img_file:
+                                img_bytes = img_file.read()
                                 st.download_button(
                                     label="Download Image",
-                                    data=buffer,
+                                    data=img_bytes,
                                     file_name=f"{page_num}_{i}.png",
                                     mime="image/png"
                                 )
                             
-                            # with open(os.path.join(image_directory,image_filename),"wb") as f:
-                            #     st.write(f"Saved the following file: {image_filename}")
-                            #     f.write(image_data.getbuffer())
-                            
-                            # Encode the path to handle spaces and special characters
-                            image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
+                            # # Encode the path to handle spaces and special characters
+                            # image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
                             
                             # print(f"Saved image: {image_filename}")
                             image_coordinates[i] = {
