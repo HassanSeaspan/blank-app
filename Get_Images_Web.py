@@ -21,7 +21,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                 for img in images:
                     print(len(images))
                     x0, y0, x1, y1 = img['x0'], img['top'], img['x1'], img['bottom']
-                    print(f"Page {page_num + 1}: Image found at ({x0}, {y0}, {x1}, {y1})")
+                    st.info(f"Page {page_num + 1}: Image found at ({x0}, {y0}, {x1}, {y1})")
                     # image_key = f'image_{index + 1}'
                     
                     if x0 < 0:
@@ -51,6 +51,10 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                             # Save the image data to a file
                             image_filename = os.path.join(image_directory, f"{page_num}_{i}.png")
                             image_data.save(image_filename)  # Save using PIL's save method
+                            # Create a BytesIO buffer to store the image in memory
+                            buffer = BytesIO()
+                            image_data.save(buffer, format="PNG")
+                            buffer.seek(0)  # Reset buffer position to the beginning
 
                             # Convert backslashes to forward slashes for the path
                             image_path = image_filename.replace(os.sep, "/")
@@ -67,6 +71,17 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
                                     file_name=f"{page_num}_{i}.png",
                                     mime="image/png"
                                 )
+                                
+                            # Save the image directly to the specified directory
+                            with open(image_filename, "wb") as f:
+                                f.write(buffer.getvalue())
+                                
+                            st.success(f"Image saved automatically to {image_filename}")
+                            print(f"Saved image: {image_filename}")
+
+                            # Display the saved image in the app
+                            image = Image.open(image_filename)
+                            st.image(image, height=250, width=250)
                             
                             # # Encode the path to handle spaces and special characters
                             # image_path = f'file:///{quote(os.path.abspath(image_filename).replace(os.sep, "/"))}'
