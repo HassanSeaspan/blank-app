@@ -219,7 +219,7 @@ def main():
             # Specify the local directory where you want to save the file
             save_dir = "./uploaded_images"
             if not os.path.exists(save_dir):
-                    os.makedirs(save_dir)  # Create the directory if it doesn't exist
+                os.makedirs(save_dir)  # Create the directory if it doesn't exist
              # Save the uploaded image to the local directory
             save_path = os.path.join(save_dir, image_file.name)
                 
