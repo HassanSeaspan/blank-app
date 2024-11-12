@@ -206,7 +206,7 @@ def main():
         if image_file is not None:
             # Check current working directory for debugging
             current_dir = os.getcwd()
-            st.success(current_dir)
+            st.write(f"Current working directory: {current_dir}")
             # Display file details
             file_details = {"FileName": image_file.name, "FileType": image_file.type}
             st.write(file_details)
