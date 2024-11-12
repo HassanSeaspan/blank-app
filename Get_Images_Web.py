@@ -209,7 +209,7 @@ def main():
             
             # Load and display the image
             img = load_image(image_file)
-            st.image(img,height=250,width=250)
+            # st.image(img,height=250,width=250)
 
 if __name__ == "__main__":
     main()
