@@ -216,16 +216,21 @@ def main():
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
 
-            # Specify the local directory where you want to save the file
-            save_dir = "./uploaded_images"
+             # Specify the local directory where you want to save the file
+            save_dir = r"C:\Users\Hassan.Elghayaty\OneDrive - Seaspan\Documents\Coding Tasks\Chris_Tasks\Application\blank-app"  # Your desired directory
+            st.write(f"Saving to: {save_dir}")
+            
+            # Ensure the directory exists
             if not os.path.exists(save_dir):
-                os.makedirs(save_dir)  # Create the directory if it doesn't exist
-             # Save the uploaded image to the local directory
+                os.makedirs(save_dir)
+            
+            # Save the uploaded image to the specified local directory
             save_path = os.path.join(save_dir, image_file.name)
-                
+            
+            # Write the file to the local directory
             with open(save_path, "wb") as f:
                 f.write(image_file.getbuffer())
-                
+            
             st.success(f"Image saved to {save_path}")
             
 if __name__ == "__main__":
