@@ -176,8 +176,12 @@ from PIL import Image
 
 @st.cache
 def load_image(image_file):
-    img = Image.open(image_file)
-    return img
+    try:
+        img = Image.open(image_file)
+        return img
+    except UnidentifiedImageError:
+        st.error("The uploaded file is not a valid image or is corrupted.")
+        return None
 
 def main():
     st.title("Welcome! Here you can extract all the images from a pdf file....")
