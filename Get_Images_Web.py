@@ -174,6 +174,7 @@ import os
 import pandas as pd
 from PIL import Image
 
+@st.cache
 def load_image(image_file):
     img = Image.open(image_file)
     return img
