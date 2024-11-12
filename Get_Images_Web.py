@@ -209,7 +209,9 @@ def main():
             
             # Load and display the image
             img = load_image(image_file)
-            st.image(img,height=250,width=250)
-
+            if img is not None:  # Check if image loaded successfully
+                st.image(img, height=250, width=350)
+            else:
+                st.error("Could not display the image. Please check the file format.")
 if __name__ == "__main__":
     main()
