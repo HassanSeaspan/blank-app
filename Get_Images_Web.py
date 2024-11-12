@@ -171,17 +171,24 @@
 #     main()
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
+from io import BytesIO
 
 @st.cache
 def load_image(image_file):
-    st.info("Now that we installed the libraries:")
+    # st.info("Now that we installed the libraries:")
+    # try:
+    #     # Open the image file
+    #     img = Image.open(image_file)
+    #     st.success("The uploaded file is not a valid image or is corrupted.")
+    #     return img
+    # except UnidentifiedImageError:
+    #     st.error("The uploaded file is not a valid image or is corrupted.")
+    #     return None
     try:
-        # Open the image file
-        img = Image.open(image_file)
-        st.success("The uploaded file is not a valid image or is corrupted.")
+        img = Image.open(BytesIO(image_file.read()))  # Convert to BytesIO explicitly
         return img
-    except UnidentifiedImageError:
-        st.error("The uploaded file is not a valid image or is corrupted.")
+    except Exception as e:
+        st.error(f"Error loading image: {e}")
         return None
 
 def main():
