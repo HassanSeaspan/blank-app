@@ -211,6 +211,9 @@ def main():
             img = load_image(image_file)
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
+            with open(image_file.name, "wb") as f:
+                f.write(image_file.getbuffer())
+            st.success("File Saved")
 
 
 if __name__ == "__main__":
