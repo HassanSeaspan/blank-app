@@ -193,7 +193,10 @@ def main():
             st.write(file_details)
             st.write(type(image_file))
             img = load_image(image_file)
-            st.image(img,height=250, width=350)
+            if img is not None:
+                st.image(img,height=250, width=350)
+            else:
+                st.error("img is not working")
         elif choice == "Dataset":
             st.subheader("Dataset")
             
