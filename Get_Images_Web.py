@@ -212,10 +212,18 @@ def main():
             img = load_image(image_file)
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
-            with open("C:\Users\Hassan.Elghayaty\OneDrive - Seaspan\Documents\Coding Tasks\Chris_Tasks\Images", "wb") as f:
+            
+              # Saving the file to disk
+            save_path = os.path.join("uploads", image_file.name)
+            
+             # Create the 'uploads' directory if it doesn't exist
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            
+            with open(save_path, "wb") as f:
                 f.write(image_file.getbuffer())
-            st.success("File Saved")
 
+             # Provide feedback to the user
+            st.success(f"File saved successfully at {save_path}")
 
 if __name__ == "__main__":
     main()
