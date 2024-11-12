@@ -210,6 +210,8 @@ def main():
             # Load and display the image
             img = load_image(image_file)
             # st.image(img,height=250,width=250)
+            st.image(img, caption="Uploaded Image", use_column_width=True)
+
 
 if __name__ == "__main__":
     main()
