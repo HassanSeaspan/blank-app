@@ -172,7 +172,7 @@
 import streamlit as st
 import os
 import pandas as pd
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 
 @st.cache
 def load_image(image_file):
