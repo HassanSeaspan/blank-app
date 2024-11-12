@@ -171,8 +171,8 @@
 #     main()
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
-import io
 
+@st.cache
 def load_image(image_file):
     st.info("Now that we installed the libraries:")
     try:
