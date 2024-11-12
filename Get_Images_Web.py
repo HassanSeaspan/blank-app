@@ -212,24 +212,8 @@ def main():
             img = load_image(image_file)
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
-            
-            # Define the upload directory
-            upload_dir = "uploads"
-            
-            # Check if the uploads directory exists, create if not
-            if not os.path.exists(upload_dir):
-                os.makedirs(upload_dir)
-            
-            # Save the file
-            save_path = os.path.join(upload_dir, image_file.name)
-            st.write(f"Saving file to: {save_path}")
-            
-            # Save the file
-            with open(save_path, "wb") as f:
+
+            with open(image_file.name, "wb") as f:
                 f.write(image_file.getbuffer())
-
-             # Provide feedback to the user
-            st.success(f"File saved successfully at {save_path}")
-
 if __name__ == "__main__":
     main()
