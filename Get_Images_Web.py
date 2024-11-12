@@ -216,7 +216,17 @@ def main():
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
 
-            with open(image_file.name, "wb") as f:
+            # Specify the local directory where you want to save the file
+            save_dir = "./uploaded_images"
+            if not os.path.exists(save_dir):
+                    os.makedirs(save_dir)  # Create the directory if it doesn't exist
+             # Save the uploaded image to the local directory
+            save_path = os.path.join(save_dir, image_file.name)
+                
+            with open(save_path, "wb") as f:
                 f.write(image_file.getbuffer())
+                
+            st.success(f"Image saved to {save_path}")
+            
 if __name__ == "__main__":
     main()
