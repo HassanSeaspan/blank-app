@@ -171,6 +171,7 @@
 #     main()
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
+import io
 
 @st.cache
 def load_image(image_file):
@@ -179,6 +180,9 @@ def load_image(image_file):
         return img
     except UnidentifiedImageError:
         st.error("The uploaded file is not a valid image or is corrupted.")
+        return None
+    except Exception as e:
+        st.error(f"Error loading image: {e}")
         return None
 
 def main():
