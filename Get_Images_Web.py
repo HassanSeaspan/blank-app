@@ -204,6 +204,9 @@ def main():
         image_file = st.file_uploader("Upload An Image", type=['jpeg', 'png', 'jpg'])
         
         if image_file is not None:
+            # Check current working directory for debugging
+            current_dir = os.getcwd()
+            st.success(current_dir)
             # Display file details
             file_details = {"FileName": image_file.name, "FileType": image_file.type}
             st.write(file_details)
