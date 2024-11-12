@@ -206,7 +206,7 @@ def main():
                 img_byte_arr = img_byte_arr.getvalue()
                 
                 # Display the image
-                st.image(img_byte_arr, height=250, width=350)
+                # st.image(img_byte_arr, height=250, width=350)
             else:
                 st.error("Could not display the image. Please check the file format.")
 
