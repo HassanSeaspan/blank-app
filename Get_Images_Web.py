@@ -170,8 +170,6 @@
 # if __name__ == "__main__":
 #     main()
 import streamlit as st
-import os
-import pandas as pd
 from PIL import Image, UnidentifiedImageError
 
 @st.cache
@@ -187,25 +185,20 @@ def main():
     st.title("Welcome! Here you can extract all the images from a pdf file....")
     
     menu = ["Home", "Dataset", "About"]
-    
     choice = st.sidebar.selectbox("Menu", menu)
     
     if choice == "Home":
         st.subheader("Upload Images")
         image_file = st.file_uploader("Upload An Image", type=['jpeg', 'png', 'jpg'])
+        
         if image_file is not None:
-            file_details = {"FileName":image_file.name, "FileType":image_file.type}
+            # Display file details
+            file_details = {"FileName": image_file.name, "FileType": image_file.type}
             st.write(file_details)
-            st.write(type(image_file))
-            img = load_image(image_file)
-            if img is not None:
-                st.image(img,height=250, width=350)
-            else:
-                st.error("img is not working")
-        elif choice == "Dataset":
-            st.subheader("Dataset")
-            
-            datafile = st.file_uploader("Upload CSV", type=['csv'])
 
-if __name__ == "__main__":
-    main()
+            # Load and display the image
+            img = load_image(image_file)
+            if img is not None:  # Check if image loaded successfully
+                st.image(img, height=250, width=350)
+            else:
+                st.error("Could not display the image. Please check the file format.")
