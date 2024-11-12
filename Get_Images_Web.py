@@ -186,6 +186,7 @@ def load_image(image_file):
     #     return None
     try:
         img = Image.open(BytesIO(image_file.read()))  # Convert to BytesIO explicitly
+        st.success("Success using the PIL with BytesIO")
         return img
     except Exception as e:
         st.error(f"Error loading image: {e}")
