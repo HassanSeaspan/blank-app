@@ -194,4 +194,10 @@ def main():
             st.write(type(image_file))
             img = load_image(image_file)
             st.image(img,height=250, width=350)
-    
+        elif choice == "Dataset":
+            st.subheader("Dataset")
+            
+            datafile = st.file_uploader("Upload CSV", type=['csv'])
+
+if __name__ == "__main__":
+    main()
