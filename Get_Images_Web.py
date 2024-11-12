@@ -177,6 +177,7 @@ def load_image(image_file):
     try:
         # Open the image file
         img = Image.open(image_file)
+        st.success("Successfully opend the file using PIL")
         return img
     except UnidentifiedImageError:
         st.error("The uploaded file is not a valid image or is corrupted.")
@@ -196,19 +197,6 @@ def main():
             # Display file details
             file_details = {"FileName": image_file.name, "FileType": image_file.type}
             st.write(file_details)
-            
-            # Load and display the image
-            img = load_image(image_file)
-            if img is not None:
-                # Convert the image to a byte stream for better handling
-                img_byte_arr = io.BytesIO()
-                img.save(img_byte_arr, format='PNG')
-                img_byte_arr = img_byte_arr.getvalue()
-                
-                # Display the image
-                # st.image(img_byte_arr, height=250, width=350)
-            else:
-                st.error("Could not display the image. Please check the file format.")
 
 if __name__ == "__main__":
     main()
