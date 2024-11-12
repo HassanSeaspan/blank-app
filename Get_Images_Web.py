@@ -208,7 +208,8 @@ def main():
             st.write(file_details)
             
             # Load and display the image
-            load_image(image_file)
+            img = load_image(image_file)
+            st.image(img,height=250,width=250)
 
 if __name__ == "__main__":
     main()
