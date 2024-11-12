@@ -172,6 +172,7 @@
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
 from io import BytesIO
+import os
 
 @st.cache
 def load_image(image_file):
@@ -211,7 +212,7 @@ def main():
             img = load_image(image_file)
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
-            with open(image_file.name, "wb") as f:
+            with open("C:\Users\Hassan.Elghayaty\OneDrive - Seaspan\Documents\Coding Tasks\Chris_Tasks\Images", "wb") as f:
                 f.write(image_file.getbuffer())
             st.success("File Saved")
 
