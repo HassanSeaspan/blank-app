@@ -170,13 +170,12 @@
 # if __name__ == "__main__":
 #     main()
 import streamlit as st
-import os
-import pandas as pd
 from PIL import Image, UnidentifiedImageError
+import io
 
-@st.cache
 def load_image(image_file):
     try:
+        # Open the image file
         img = Image.open(image_file)
         return img
     except UnidentifiedImageError:
@@ -198,14 +197,16 @@ def main():
             file_details = {"FileName": image_file.name, "FileType": image_file.type}
             st.write(file_details)
             
-            # Display raw file content for debugging
-            img_bytes = image_file.read()
-            st.write("Raw file content (bytes):", img_bytes[:100])  # Display the first 100 bytes for debugging
-            
             # Load and display the image
             img = load_image(image_file)
-            if img is not None:  # Check if image loaded successfully
-                st.image(img, height=250, width=350)
+            if img is not None:
+                # Convert the image to a byte stream for better handling
+                img_byte_arr = io.BytesIO()
+                img.save(img_byte_arr, format='PNG')
+                img_byte_arr = img_byte_arr.getvalue()
+                
+                # Display the image
+                st.image(img_byte_arr, height=250, width=350)
             else:
                 st.error("Could not display the image. Please check the file format.")
 
