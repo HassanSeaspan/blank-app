@@ -213,12 +213,18 @@ def main():
             # st.image(img,height=250,width=250)
             st.image(img, caption="Uploaded Image", use_column_width=True)
             
-              # Saving the file to disk
-            save_path = os.path.join("img", image_file.name)
+            # Define the upload directory
+            upload_dir = "uploads"
             
-             # Create the 'uploads' directory if it doesn't exist
-            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            # Check if the uploads directory exists, create if not
+            if not os.path.exists(upload_dir):
+                os.makedirs(upload_dir)
             
+            # Save the file
+            save_path = os.path.join(upload_dir, image_file.name)
+            st.write(f"Saving file to: {save_path}")
+            
+            # Save the file
             with open(save_path, "wb") as f:
                 f.write(image_file.getbuffer())
 
