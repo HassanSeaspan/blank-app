@@ -214,7 +214,7 @@ def main():
             st.image(img, caption="Uploaded Image", use_column_width=True)
             
               # Saving the file to disk
-            save_path = os.path.join("uploads", image_file.name)
+            save_path = os.path.join("imag", image_file.name)
             
              # Create the 'uploads' directory if it doesn't exist
             os.makedirs(os.path.dirname(save_path), exist_ok=True)
