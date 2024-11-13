@@ -217,8 +217,10 @@ def main():
             st.image(img, use_column_width=True, width=100)
             # st.image(img, caption="Uploaded Image", use_column_width=True, width=100)
             
-            with open(os.path.join("tempDir", image_file.name), "wb") as f:
+            with open(os.path.join("tempDir",image_file.name),"wb") as f:
                 f.write(image_file.getbuffer())
+            
+            st.success("File saved successfully")
 
             
 if __name__ == "__main__":
