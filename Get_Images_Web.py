@@ -215,6 +215,11 @@ def main():
             img = load_image(image_file)
             # st.image(img,height=250,width=250)
             st.image(img, use_column_width=True, width=100)
+            # st.image(img, caption="Uploaded Image", use_column_width=True, width=100)
+            
+            with open(os.path.join("tempDir", image_file.name), "wb") as f:
+                f.write(image_file.getbuffer())
+
             
 if __name__ == "__main__":
     main()
