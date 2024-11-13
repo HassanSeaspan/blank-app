@@ -186,13 +186,9 @@ def load_image(image_file):
     # except UnidentifiedImageError:
     #     st.error("The uploaded file is not a valid image or is corrupted.")
     #     return None
-    try:
-        img = Image.open(BytesIO(image_file.read()))  # Convert to BytesIO explicitly
-        st.success("Success using the PIL with BytesIO")
-        return img
-    except Exception as e:
-        st.error(f"Error loading image: {e}")
-        return None
+    img = Image.open(image_file)  # Convert to BytesIO explicitly
+    st.success("Success using the PIL with BytesIO")
+    return img
 
 def main():
     st.title("Welcome! Here you can extract all the images from a pdf file....")
