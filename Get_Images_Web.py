@@ -187,7 +187,6 @@ def load_image(image_file):
     #     st.error("The uploaded file is not a valid image or is corrupted.")
     #     return None
     img = Image.open(image_file)  # Convert to BytesIO explicitly
-    st.success("Success using the PIL with BytesIO")
     return img
 
 def main():
@@ -202,8 +201,6 @@ def main():
         
         if image_file is not None:
             # Check current working directory for debugging
-            current_dir = os.getcwd()
-            st.write(f"Current working directory: {current_dir}")
             # Display file details
             file_details = {"FileName": image_file.name, "FileType": image_file.type}
             st.write(file_details)
@@ -214,7 +211,7 @@ def main():
             st.image(img, use_column_width=True, width=100)
             # st.image(img, caption="Uploaded Image", use_column_width=True, width=100)
             
-            with open(os.path.join(r"C:\Users\Hassan.Elghayaty\Downloads\tempDir", image_file.name), "wb") as f:
+            with open(image_file.name, "wb") as f:
                 f.write(image_file.getbuffer())
 
             
