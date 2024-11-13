@@ -218,22 +218,8 @@ def main():
             st.image(img, use_column_width=True, width=100)
             # st.image(img, caption="Uploaded Image", use_column_width=True, width=100)
             
-            # with open(os.path.join(r"C:\Users\Hassan.Elghayaty\OneDrive - Seaspan\Documents\Coding Tasks\Chris_Tasks\Application\blank-app\tempDir", image_file.name), "wb") as f:
-            #     f.write(image_file.getbuffer())
-            
-            # Define the directory and file paths
-            output_dir = Path(r"C:\Users\Hassan.Elghayaty\OneDrive - Seaspan\Documents\Coding Tasks\Chris_Tasks\Application\blank-app\tempDir")
-            output_dir.mkdir(parents=True, exist_ok=True)  # Create tempDir if it doesn't exist
-
-            output_path = output_dir / image_file.name
-
-            # Save the file
-            with open(output_path, "wb") as f:
+            with open(os.path.join("tempDir", image_file.name), "wb") as f:
                 f.write(image_file.getbuffer())
-
-            st.success(f"File saved successfully to {output_path}")
-
-            st.success("File saved successfully")
 
             
 if __name__ == "__main__":
