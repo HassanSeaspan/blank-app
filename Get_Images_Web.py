@@ -217,9 +217,9 @@ def main():
             st.image(img, use_column_width=True, width=100)
             # st.image(img, caption="Uploaded Image", use_column_width=True, width=100)
             
-            with open(os.path.join("blank-app/tempDir",image_file.name),"wb") as f:
+            with open(os.path.join(r"C:\Users\Hassan.Elghayaty\OneDrive - Seaspan\Documents\Coding Tasks\Chris_Tasks\Application\blank-app\tempDir", image_file.name), "wb") as f:
                 f.write(image_file.getbuffer())
-            
+
             st.success("File saved successfully")
 
             
