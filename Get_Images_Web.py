@@ -19,7 +19,7 @@ def extract_images_from_page(pdf_path, page_num, image_directory):
             images = page.images
             if images:
                 for img in images:
-                    print(len(images))
+                    st.info(f"There are {len(images)} imgs")
                     x0, y0, x1, y1 = img['x0'], img['top'], img['x1'], img['bottom']
                     st.info(f"Page {page_num + 1}: Image found at ({x0}, {y0}, {x1}, {y1})")
                     # image_key = f'image_{index + 1}'
