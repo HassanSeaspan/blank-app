@@ -77,7 +77,7 @@ def save_uploaded_file(uploaded_file):
 
     return temp_file_path
 
-def impodgdhnocument():
+def import_document():
     """Handles document import and directory selection for image extraction."""
     global pdf_file, saved_directory
 
