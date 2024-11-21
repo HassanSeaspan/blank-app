@@ -114,7 +114,9 @@ def import_document():
                     # Step 3: Extract Images Button (Trigger the extraction)
                     if st.button('Extract Images', key="extract_button"):
                         st.write(f"Extracting images from {pdf_file}")
-                        extract_images_from_page(pdf_file, 0, saved_directory)  # Trigger extraction
+                        page_count = count_pdf_pages(pdf_file)
+                        for page_num in range(0, page_count):
+                            extract_images_from_page(pdf_file, page_num, saved_directory)  # Trigger extraction
         else:
             st.warning("Please upload a PDF document.")
 
@@ -123,7 +125,10 @@ def import_document():
     except Exception as e:
         st.error(f"An error occurred: {e}")
 
-
+def count_pdf_pages(file_path):
+    with open(file_path, 'rb') as file:
+        reader = PyPDF2.PdfReader(file)
+        return len(reader.pages)
 
 # Main function (Streamlit app entry point)
 def main():
